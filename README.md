@@ -54,7 +54,9 @@ Then register the plugin in your profile's `cordis.patch.yml` (after the bundle 
 - insert:
     - id: dshos-dock
       name: dshos-dock
-      # optional: point at a custom data root
+      # optional: custom data root (workspace root OR a .dshos dir).
+      # The dock auto-detects <root>/.dshos/ (contract) or the legacy
+      # 操作系统/ + 状态/ DSH-OS layout inside it.
       # config:
       #   root: /absolute/path/to/workspace
 ```

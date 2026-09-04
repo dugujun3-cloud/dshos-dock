@@ -79,19 +79,32 @@ function seedGeneric(root) {
   rmSync(root, { recursive: true, force: true })
 }
 
-// 4) configured root wins
+// 4) configured root: legacy DSH-OS layout auto-detected inside it
 {
   const cfgRoot = join(tmpdir(), 'dshos-cfg-' + Date.now())
   rmSync(cfgRoot, { recursive: true, force: true })
-  mkdirSync(join(cfgRoot, '.dshos', 'tasks'), { recursive: true })
-  const other = join(tmpdir(), 'dshos-other-' + Date.now())
-  rmSync(other, { recursive: true, force: true })
-  mkdirSync(other, { recursive: true })
-  seedGeneric(other)
-  const out = __collect(other, { root: cfgRoot })
-  check('config: configured root wins', out.source === 'configured' && out.tasks.total === 0, out.source)
+  mkdirSync(join(cfgRoot, '操作系统', 'runtime'), { recursive: true })
+  mkdirSync(join(cfgRoot, '操作系统', 'checklists'), { recursive: true })
+  mkdirSync(join(cfgRoot, '状态', 'm1'), { recursive: true })
+  mk(join(cfgRoot, '操作系统'), 'workflow_status.json', JSON.stringify({ status: 'active', current_stage: 'kickoff' }))
+  mk(join(cfgRoot, '操作系统', 'runtime'), 'runs_log.jsonl', JSON.stringify({ ts: '2026-09-04T12:00:00Z', event: 'run-done', task_id: 'm1' }) + '\n')
+  mk(join(cfgRoot, '操作系统', 'checklists'), '2026-09-04.md', '# x')
+  mk(join(cfgRoot, '状态', 'm1'), 'workflow_status.json', JSON.stringify({ status: 'in_progress', current_stage: 'build', updated_at: '2026-09-04T11:00:00Z' }))
+  const out = __collect('/elsewhere', { root: cfgRoot })
+  check('config: legacy detected via root', out.source === 'configured-legacy' && out.tasks.total === 1 && out.tasks.running === 1, out.source)
+  check('config: legacy event + checklist', out.events.length === 1 && out.events[0].event === 'run-done' && out.latestChecklist === '2026-09-04.md')
   rmSync(cfgRoot, { recursive: true, force: true })
-  rmSync(other, { recursive: true, force: true })
+}
+
+// 5) configured root: contract layout (.dshos under root) wins first
+{
+  const cfgRoot = join(tmpdir(), 'dshos-cfg2-' + Date.now())
+  rmSync(cfgRoot, { recursive: true, force: true })
+  mkdirSync(cfgRoot, { recursive: true })
+  seedGeneric(cfgRoot)
+  const out = __collect('/elsewhere', { root: cfgRoot })
+  check('config: contract detected via root', out.source === 'configured' && out.tasks.total === 3 && out.ready === true, out.source)
+  rmSync(cfgRoot, { recursive: true, force: true })
 }
 
 // 5) HTTP route + 405
