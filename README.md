@@ -35,7 +35,7 @@ The data comes from a tiny, user-owned text contract in your workspace (`.dshos/
 
 Requires a DeepSeek Harness web profile (npm-managed `~/.dsh/profiles/web`).
 
-**Option A — via `dsh plugin` (recommended)**
+**Option A — via `dsh plugin` (recommended, auto-applies the bundle patch)**
 
 ```sh
 dsh plugin --profile web add github:dugujun3-cloud/dshos-dock

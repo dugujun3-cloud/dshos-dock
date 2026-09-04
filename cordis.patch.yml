@@ -1,0 +1,5 @@
+# dshos-dock bundle patch: mounts the plugin into a profile layer stack.
+# Users override data source via their own profile patch row (config.root).
+- insert:
+    - id: dshos-dock
+      name: 'dshos-dock'
