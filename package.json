@@ -1,6 +1,6 @@
 {
   "name": "dshos-dock",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Workspace OS status bar for DeepSeek Harness: task counts, latest run event, and checkup date above the conversation input. Zero deps, read-only, configurable data contract (.dshos/).",
   "type": "module",
   "main": "lib/index.js",

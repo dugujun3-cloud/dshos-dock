@@ -29,7 +29,7 @@ The data comes from a tiny, user-owned text contract in your workspace (`.dshos/
                     [ input box below — as usual ]
 ```
 
-> Pack a screenshot of your own workspace status bar here for the README preview.
+![dshos-dock demo](images/dshos-dock-demo.png)
 
 ## Install
 
