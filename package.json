@@ -1,0 +1,43 @@
+{
+  "name": "dshos-dock",
+  "version": "0.1.0",
+  "description": "Workspace OS status bar for DeepSeek Harness: task counts, latest run event, and checkup date above the conversation input. Zero deps, read-only, configurable data contract (.dshos/).",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "workspace",
+    "status",
+    "dashboard",
+    "os",
+    "agent"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dugujun3-cloud/dshos-dock.git"
+  },
+  "author": "dugujun3-cloud",
+  "engines": {
+    "node": ">=18"
+  }
+}
